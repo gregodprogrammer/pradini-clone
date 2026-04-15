@@ -206,6 +206,7 @@ function VehiclesSection({ vehicles }: { vehicles: Vehicle[] }) {
                 brand={vehicle.brand}
                 category={vehicle.category}
                 price_per_hour={vehicle.price_per_hour}
+                bookHref={`/book/${vehicle.id}`}
               />
             ))}
           </div>
