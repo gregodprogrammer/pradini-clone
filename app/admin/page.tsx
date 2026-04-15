@@ -16,8 +16,8 @@ interface Booking {
   total_price: number
   status: 'pending' | 'confirmed' | 'completed'
   created_at: string
-  vehicles: { name: string; brand: string }[] | null
-  drivers: { name: string }[] | null
+  vehicles?: { name: string; brand: string }[] | null
+  drivers?: { name: string }[] | null
 }
 
 interface Stats {
@@ -127,7 +127,7 @@ export default function AdminPage() {
       return
     }
 
-    const rows = (bookingData ?? []) as Booking[]
+    const rows = (bookingData ?? []) as any[]
     setBookings(rows)
     setStats({
       totalVehicles: vehicleCount ?? 0,
