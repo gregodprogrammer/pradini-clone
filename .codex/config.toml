@@ -1,0 +1,3 @@
+[mcp_servers.insforge]
+type = "http"
+url = "https://mcp.insforge.dev/mcp"

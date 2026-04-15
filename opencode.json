@@ -1,0 +1,9 @@
+{
+  "mcp": {
+    "insforge": {
+      "type": "remote",
+      "url": "https://mcp.insforge.dev/mcp",
+      "enabled": true
+    }
+  }
+}
