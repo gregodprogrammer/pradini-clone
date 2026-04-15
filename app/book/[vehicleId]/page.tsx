@@ -130,24 +130,36 @@ export default function BookingPage() {
   const [bookingId, setBookingId] = useState<string | null>(null)
 
   // ── Fetch vehicle + drivers ──────────────────────────────────────────────
-  useEffect(() => {
+ useEffect(() => {
     async function load() {
-      const [{ data: vData, error: vErr }, { data: dData, error: dErr }] = await Promise.all([
-        db.from('vehicles').select('id, name, brand, category, price_per_hour, price_per_day, image_url').eq('id', vehicleId).single(),
-        db.from('drivers').select('id, name, rating, experience_years').eq('available', true),
-      ])
+      try {
+        const fetchData = Promise.all([
+          db.from('vehicles').select('id, name, brand, category, price_per_hour, price_per_day, image_url').eq('id', vehicleId).single(),
+          db.from('drivers').select('id, name, rating, experience_years').eq('available', true),
+        ])
 
-      if (vErr || !vData) {
+        const timeout = new Promise<never>((_, reject) =>
+          setTimeout(() => reject(new Error('Request timed out')), 8000)
+        )
+
+        const [{ data: vData, error: vErr }, { data: dData, error: dErr }] =
+          await Promise.race([fetchData, timeout])
+
+        if (vErr || !vData) {
+          setNotFound(true)
+        } else {
+          setVehicle(vData as Vehicle)
+        }
+
+        if (!dErr && dData) {
+          setDrivers(dData as Driver[])
+        }
+      } catch (err) {
+        console.error('Booking page load error:', err)
         setNotFound(true)
-      } else {
-        setVehicle(vData as Vehicle)
+      } finally {
+        setLoading(false)
       }
-
-      if (!dErr && dData) {
-        setDrivers(dData as Driver[])
-      }
-
-      setLoading(false)
     }
     load()
   }, [vehicleId])
