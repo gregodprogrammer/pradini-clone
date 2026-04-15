@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 
 const VEHICLE_IMAGES: Record<string, string> = {
   'Range Rover Autobiography': 'https://images.unsplash.com/photo-1606016159991-dfe4f2746ad5?w=800&q=80',
@@ -131,7 +132,7 @@ export default function VehicleCard({ name, brand, category, price_per_hour, pri
               </p>
             )}
           </div>
-          <a
+          <Link
             href={bookHref}
             style={{
               display: 'inline-flex',
@@ -149,7 +150,7 @@ export default function VehicleCard({ name, brand, category, price_per_hour, pri
             }}
           >
             {bookLabel}
-          </a>
+          </Link>
         </div>
       </div>
     </div>
