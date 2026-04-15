@@ -16,8 +16,8 @@ interface Booking {
   total_price: number
   status: 'pending' | 'confirmed' | 'completed'
   created_at: string
-  vehicles: { name: string; brand: string } | null
-  drivers: { name: string } | null
+  vehicles: { name: string; brand: string }[] | null
+  drivers: { name: string }[] | null
 }
 
 interface Stats {
@@ -313,13 +313,13 @@ export default function AdminPage() {
 
                         {/* Vehicle */}
                         <td style={{ padding: '1rem 1.25rem' }}>
-                          {booking.vehicles ? (
+                          {booking.vehicles?.[0] ? (
                             <>
                               <p style={{ color: '#ffffff', fontSize: '0.875rem', fontWeight: 500, marginBottom: '2px' }}>
-                                {booking.vehicles.name}
+                                {booking.vehicles[0].name}
                               </p>
                               <p style={{ color: 'rgba(212,175,55,0.6)', fontSize: '0.72rem' }}>
-                                {booking.vehicles.brand}
+                                {booking.vehicles[0].brand}
                               </p>
                             </>
                           ) : (
